@@ -9,7 +9,6 @@ const loadTechnologies = async () => {
   return data
 }
 
-// Created once, outside the component, so every render uses the same promise
 const technologiesPromise = loadTechnologies()
 
 function Technologies() {
@@ -38,15 +37,19 @@ function Technologies() {
   }
 
   return (
-    <section className="mt-28 pb-32">
-      <h2 className="font-inter text-4xl font-extrabold tracking-tight text-slate-900">
+    <section className="mt-8 pb-14 md:mt-14 md:pb-20 lg:mt-28 lg:pb-32">
+      <h2 className="text-center font-inter text-2xl font-bold tracking-tight text-slate-900 md:text-3xl lg:text-left lg:text-4xl lg:font-extrabold">
         Explore the <span className="text-[#db2777]">Technologies</span>
       </h2>
-      <p className="mt-2 text-slate-500">Pick one technology per category to build your ideal stack.</p>
+      <p className="mt-1 text-center font-inter text-xs text-slate-500 md:mt-2 md:font-sans md:text-base lg:text-left">
+        Pick one technology per category to build your ideal stack.
+      </p>
 
-      <div className="mt-10 grid grid-cols-12 gap-8">
-        <div className="col-span-9 grid grid-cols-3 gap-5">
-          <Suspense fallback={<p className="col-span-3 py-24 text-center text-slate-500">Loading technologies...</p>}>
+      <div className="mt-5 grid grid-cols-1 gap-5 md:mt-8 lg:mt-10 lg:grid-cols-12 lg:gap-8">
+        <div className="grid grid-cols-1 gap-3.5 md:grid-cols-2 md:gap-5 lg:col-span-9 xl:grid-cols-3">
+          <Suspense
+            fallback={<p className="py-24 text-center text-slate-500 md:col-span-2 xl:col-span-3">Loading technologies...</p>}
+          >
             <TechnologyList technologiesPromise={technologiesPromise} stack={stack} onAddToStack={handleAddToStack} />
           </Suspense>
         </div>

@@ -48,7 +48,7 @@ function YourStack({ stack, onRemoveFromStack, onRemoveAll }) {
   }
 
   return (
-    <aside className="sticky top-28 col-span-3 self-start rounded-2xl border border-slate-100 bg-white p-5 shadow-xs">
+    <aside className="rounded-2xl border border-slate-100 bg-white p-5 shadow-xs lg:sticky lg:top-28 lg:col-span-3 lg:self-start">
       <h3 className="font-bold text-slate-900">Your Stack</h3>
       <p className="mt-1 pb-3 text-xs text-slate-400">{countText}</p>
       {content}
