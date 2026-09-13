@@ -4,9 +4,15 @@ import TechnologyList from './TechnologyList.jsx'
 import YourStack from './YourStack.jsx'
 
 const loadTechnologies = async () => {
-  const res = await fetch('/technologies.json')
-  const data = await res.json()
-  return data
+  try {
+    const res = await fetch('/technologies.json')
+    const data = await res.json()
+    return data
+  } catch (error) {
+    // Bad JSON or network problem: return an empty list so the page does not go blank
+    console.error('Could not load technologies:', error)
+    return []
+  }
 }
 
 const technologiesPromise = loadTechnologies()
