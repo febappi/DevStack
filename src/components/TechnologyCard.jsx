@@ -9,8 +9,19 @@ const badgeColors = {
   cyan: 'border-cyan-100 bg-cyan-50 text-cyan-600',
 }
 
-function TechnologyCard({ technology }) {
+function TechnologyCard({ technology, isAdded, onAddToStack }) {
   const { name, category, description, icon, rating, difficulty, badge, badgeColor } = technology
+
+  let buttonText
+  let buttonStyle
+
+  if (isAdded) {
+    buttonText = '✓ Added to Stack'
+    buttonStyle = 'cursor-not-allowed bg-slate-100 text-slate-400 hover:bg-slate-100'
+  } else {
+    buttonText = 'Add to Stack'
+    buttonStyle = 'bg-[#0a0f1d] text-white hover:bg-slate-800'
+  }
 
   return (
     <div className="card rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)]">
@@ -44,9 +55,11 @@ function TechnologyCard({ technology }) {
 
         <button
           type="button"
-          className="btn mt-4 h-9 w-full rounded-lg border-0 bg-[#0a0f1d] text-xs font-medium text-white shadow-none hover:bg-slate-800"
+          aria-disabled={isAdded}
+          onClick={() => onAddToStack(technology)}
+          className={`btn mt-4 h-9 w-full rounded-lg border-0 text-xs font-medium shadow-none ${buttonStyle}`}
         >
-          Add to Stack
+          {buttonText}
         </button>
       </div>
     </div>

@@ -1,8 +1,29 @@
 import { useEffect, useState } from 'react'
 import TechnologyCard from './TechnologyCard.jsx'
+import YourStack from './YourStack.jsx'
 
 function Technologies() {
   const [technologies, setTechnologies] = useState([])
+  const [stack, setStack] = useState([])
+
+  const handleAddToStack = (technology) => {
+    const alreadyAdded = stack.some((item) => item.id === technology.id)
+
+    if (alreadyAdded) {
+      alert(`${technology.name} is already in your stack!`)
+    } else {
+      setStack([...stack, technology])
+    }
+  }
+
+  const handleRemoveFromStack = (technology) => {
+    const remainingStack = stack.filter((item) => item.id !== technology.id)
+    setStack(remainingStack)
+  }
+
+  const handleRemoveAll = () => {
+    setStack([])
+  }
 
   useEffect(() => {
     const loadTechnologies = async () => {
@@ -22,12 +43,18 @@ function Technologies() {
       <p className="mt-2 text-slate-500">Pick one technology per category to build your ideal stack.</p>
 
       <div className="mt-10 grid grid-cols-12 gap-8">
-        {/* Cards take 9 of 12 columns (the other 3 are for Your Stack later) */}
         <div className="col-span-9 grid grid-cols-3 gap-5">
           {technologies.map((technology) => (
-            <TechnologyCard key={technology.id} technology={technology} />
+            <TechnologyCard
+              key={technology.id}
+              technology={technology}
+              isAdded={stack.some((item) => item.id === technology.id)}
+              onAddToStack={handleAddToStack}
+            />
           ))}
         </div>
+
+        <YourStack stack={stack} onRemoveFromStack={handleRemoveFromStack} onRemoveAll={handleRemoveAll} />
       </div>
     </section>
   )
