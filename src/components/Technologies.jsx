@@ -21,11 +21,14 @@ function Technologies() {
       </h2>
       <p className="mt-2 text-slate-500">Pick one technology per category to build your ideal stack.</p>
 
-      {technologies.length > 0 && (
-        <div className="mt-10 w-72">
-          <TechnologyCard technology={technologies[0]} />
+      <div className="mt-10 grid grid-cols-12 gap-8">
+        {/* Cards take 9 of 12 columns (the other 3 are for Your Stack later) */}
+        <div className="col-span-9 grid grid-cols-3 gap-5">
+          {technologies.map((technology) => (
+            <TechnologyCard key={technology.id} technology={technology} />
+          ))}
         </div>
-      )}
+      </div>
     </section>
   )
 }
