@@ -3,3 +3,29 @@
 @plugin 'daisyui' {
   themes: light --default;
 }
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+ * Brand gradient (orange → pink → violet).
+ * This is the ONLY place the gradient is defined.
+ * Change it here and every gradient in the app updates.
+ */
+:root {
+  --brand-gradient: linear-gradient(90deg, #ff5722 0%, #d81b7e 50%, #7c3aed 100%);
+}
+
+/* Gradient background — logo icon, primary buttons */
+@utility bg-brand-gradient {
+  background-image: var(--brand-gradient);
+}
+
+/* Gradient text — brand name, highlighted headings */
+@utility text-brand-gradient {
+  background-image: var(--brand-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
