@@ -1,10 +1,18 @@
-import { useEffect, useState } from 'react'
+import { Suspense, useState } from 'react'
 import { toast } from 'react-toastify'
-import TechnologyCard from './TechnologyCard.jsx'
+import TechnologyList from './TechnologyList.jsx'
 import YourStack from './YourStack.jsx'
 
+const loadTechnologies = async () => {
+  const res = await fetch('/technologies.json')
+  const data = await res.json()
+  return data
+}
+
+// Created once, outside the component, so every render uses the same promise
+const technologiesPromise = loadTechnologies()
+
 function Technologies() {
-  const [technologies, setTechnologies] = useState([])
   const [stack, setStack] = useState([])
 
   const handleAddToStack = (technology) => {
@@ -29,16 +37,6 @@ function Technologies() {
     toast.info('All technologies removed from your stack.')
   }
 
-  useEffect(() => {
-    const loadTechnologies = async () => {
-      const res = await fetch('/technologies.json')
-      const data = await res.json()
-      setTechnologies(data)
-    }
-
-    loadTechnologies()
-  }, [])
-
   return (
     <section className="mt-28 pb-32">
       <h2 className="font-inter text-4xl font-extrabold tracking-tight text-slate-900">
@@ -48,14 +46,9 @@ function Technologies() {
 
       <div className="mt-10 grid grid-cols-12 gap-8">
         <div className="col-span-9 grid grid-cols-3 gap-5">
-          {technologies.map((technology) => (
-            <TechnologyCard
-              key={technology.id}
-              technology={technology}
-              isAdded={stack.some((item) => item.id === technology.id)}
-              onAddToStack={handleAddToStack}
-            />
-          ))}
+          <Suspense fallback={<p className="col-span-3 py-24 text-center text-slate-500">Loading technologies...</p>}>
+            <TechnologyList technologiesPromise={technologiesPromise} stack={stack} onAddToStack={handleAddToStack} />
+          </Suspense>
         </div>
 
         <YourStack stack={stack} onRemoveFromStack={handleRemoveFromStack} onRemoveAll={handleRemoveAll} />
