@@ -14,17 +14,23 @@ function TechnologyCard({ technology, isAdded, onAddToStack }) {
 
   let buttonText
   let buttonStyle
+  let cardBorder
 
   if (isAdded) {
     buttonText = '✓ Added to Stack'
-    buttonStyle = 'cursor-not-allowed bg-slate-100 text-slate-400 hover:bg-slate-100'
+    buttonStyle =
+      'pointer-events-auto cursor-not-allowed border border-transparent bg-slate-100 text-slate-400 hover:border-red-400 hover:bg-slate-100'
+    cardBorder = 'border-red-400'
   } else {
     buttonText = 'Add to Stack'
-    buttonStyle = 'bg-[#0a0f1d] text-white hover:bg-slate-800'
+    buttonStyle = 'border-0 bg-[#0a0f1d] text-white hover:bg-slate-800'
+    cardBorder = 'border-slate-100'
   }
 
   return (
-    <div className="card rounded-2xl border border-slate-100 bg-white p-5 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)]">
+    <div
+      className={`card rounded-2xl border bg-white p-5 shadow-[0_2px_10px_-3px_rgba(0,0,0,0.05)] ${cardBorder}`}
+    >
       <div className="flex items-start justify-between">
         <div className="flex size-10 items-center justify-center">
           <img src={icon} alt={`${name} logo`} className="size-7" />
@@ -57,7 +63,7 @@ function TechnologyCard({ technology, isAdded, onAddToStack }) {
           type="button"
           aria-disabled={isAdded}
           onClick={() => onAddToStack(technology)}
-          className={`btn mt-4 h-9 w-full rounded-lg border-0 text-xs font-medium shadow-none ${buttonStyle}`}
+          className={`btn mt-4 h-9 w-full rounded-lg text-xs font-medium shadow-none ${buttonStyle}`}
         >
           {buttonText}
         </button>
